@@ -22,7 +22,7 @@ function App() {
   }
  
   useEffect(()=>{
-    console.log('hi')
+    console.log('hello')
    localStorage.setItem('contacts', JSON.stringify(contacts));
   },[contacts]
   );
