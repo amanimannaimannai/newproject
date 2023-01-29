@@ -1,23 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Header from './components/header';
+import Addtocontact from './components/addtocontact';
+import Contactlist from './components/contact';
+
 
 function App() {
+  const [contacts, seContacts] = useState(localStorage.getItem('contacts')?JSON.parse(localStorage.getItem('contacts')):[]);
+  const handleraddcontact =(contact)=>{
+
+    seContacts([...contacts, contact]);
+  };
+
+  const deletehandeler=(id)=>{
+    const hetlicontacts = contacts.filter((contact)=>{
+      return contact.id!==id;
+       });
+       seContacts(hetlicontacts)
+
+
+  }
+ 
+  useEffect(()=>{
+    console.log('hi')
+   localStorage.setItem('contacts', JSON.stringify(contacts));
+  },[contacts]
+  );
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Addtocontact addcontacthandeler ={handleraddcontact} />
+      <Contactlist contacts={contacts} getidmilcontact={deletehandeler} />   
     </div>
   );
 }
